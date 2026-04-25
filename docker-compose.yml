@@ -1,0 +1,41 @@
+services:
+  api:
+    build: ./api
+    container_name: taylorjsanderson-api-1
+    restart: unless-stopped
+    networks:
+      default:
+      edge:
+        aliases:
+          - taylorjsanderson-api
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/v1/health/live').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  web:
+    build: ./web
+    container_name: taylorjsanderson-web-1
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      default:
+      edge:
+        aliases:
+          - taylorjsanderson-web
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  default:
+    name: taylorjsanderson-com_default
+  edge:
+    external: true
