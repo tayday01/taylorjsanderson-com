@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-taylorjsanderson-com
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Set up SSH key + known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo 'shadowlab.taylorjsanderson.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIubrhiuMoKw51P6BV5mU05Z/6w/GHdHE1SMwfYO4MJ0' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Trigger deploy on droplet
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+              -o BatchMode=yes \
+              -o ConnectTimeout=10 \
+              shadowlabs@shadowlab.taylorjsanderson.com
+
+      - name: Verify site is healthy
+        run: |
+          set -e
+          for i in $(seq 1 30); do
+            if curl -fsSL --max-time 5 https://www.taylorjsanderson.com/v1/health/live > /tmp/health.json; then
+              cat /tmp/health.json
+              echo
+              echo "::notice::deploy verified at attempt $i"
+              exit 0
+            fi
+            echo "attempt $i: not ready yet"
+            sleep 2
+          done
+          echo "::error::deploy verification timed out — site did not return healthy within 60s"
+          exit 1
