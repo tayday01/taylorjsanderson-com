@@ -77,6 +77,11 @@ function delayForBall(index) {
   return PARK_DELAY_MS + SECOND_BALL_OFFSET_MS + Math.random() * SECOND_BALL_RANDOM_MAX_MS;
 }
 
+function serveDirectionForBall(index, defaultTowardLeft) {
+  if (index === 1) return Math.random() < 0.5;
+  return defaultTowardLeft;
+}
+
 function parkBallAt(ball, oRect, fallbackW, fallbackH) {
   if (oRect) {
     ball.x = oRect.x;
@@ -132,7 +137,7 @@ export default function Pong({ oRects }) {
           vy: 0,
           parked: true,
           parkUntil: now0 + delayForBall(1),
-          serveTowardLeft: true,
+          serveTowardLeft: serveDirectionForBall(1, true),
         },
       ],
       left: { y: 0 },
@@ -166,7 +171,7 @@ export default function Pong({ oRects }) {
     const beginParkBall = (ball, towardLeft, now) => {
       ball.parked = true;
       ball.parkUntil = now + delayForBall(ball.oIndex);
-      ball.serveTowardLeft = towardLeft;
+      ball.serveTowardLeft = serveDirectionForBall(ball.oIndex, towardLeft);
       parkBallAt(ball, oRectsRef.current[ball.oIndex], state.w, state.h);
     };
 
