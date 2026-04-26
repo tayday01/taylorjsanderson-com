@@ -9,6 +9,8 @@ const BALL_SPEED_RATIO = 0.55;
 const BALL_SPEEDUP = 1.05;
 const BALL_MAX_SPEED_RATIO = 1.4;
 const PARK_DELAY_MS = 3000;
+const SECOND_BALL_OFFSET_MS = 2000;
+const SECOND_BALL_RANDOM_MAX_MS = 10000;
 const RESET_AT_TOTAL_SCORE = 10;
 
 const SEGMENTS = {
@@ -70,27 +72,69 @@ function drawScore(ctx, score, centerX, topY, digitH) {
   }
 }
 
-export default function Pong({ oRect }) {
+function delayForBall(index) {
+  if (index === 0) return PARK_DELAY_MS;
+  return PARK_DELAY_MS + SECOND_BALL_OFFSET_MS + Math.random() * SECOND_BALL_RANDOM_MAX_MS;
+}
+
+function parkBallAt(ball, oRect, fallbackW, fallbackH) {
+  if (oRect) {
+    ball.x = oRect.x;
+    ball.y = oRect.y;
+  } else {
+    ball.x = fallbackW / 2;
+    ball.y = fallbackH / 2;
+  }
+  ball.vx = 0;
+  ball.vy = 0;
+}
+
+export default function Pong({ oRects }) {
   const canvasRef = useRef(null);
   const stateRef = useRef(null);
-  const oRectRef = useRef(oRect);
+  const oRectsRef = useRef(oRects);
   const [scores, setScores] = useState([0, 0]);
 
   useEffect(() => {
-    oRectRef.current = oRect;
+    oRectsRef.current = oRects;
     const s = stateRef.current;
-    if (s && s.parked) parkBallAt(s, oRectRef.current);
-  }, [oRect]);
+    if (!s) return;
+    s.balls.forEach((ball, i) => {
+      if (ball.parked) parkBallAt(ball, oRects[i], s.w, s.h);
+    });
+  }, [oRects]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
+    const now0 = performance.now();
     const state = {
       w: 0,
       h: 0,
       dpr: 1,
-      ball: { x: 0, y: 0, vx: 0, vy: 0 },
+      balls: [
+        {
+          oIndex: 0,
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          parked: true,
+          parkUntil: now0 + delayForBall(0),
+          serveTowardLeft: true,
+        },
+        {
+          oIndex: 1,
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          parked: true,
+          parkUntil: now0 + delayForBall(1),
+          serveTowardLeft: true,
+        },
+      ],
       left: { y: 0 },
       right: { y: 0 },
       keys: new Set(),
@@ -98,9 +142,6 @@ export default function Pong({ oRect }) {
       score: [0, 0],
       lastTime: null,
       raf: 0,
-      parked: true,
-      parkUntil: performance.now() + PARK_DELAY_MS,
-      pendingServeTowardLeft: true,
     };
     stateRef.current = state;
 
@@ -117,28 +158,28 @@ export default function Pong({ oRect }) {
       const paddleH = state.h * PADDLE_HEIGHT_RATIO;
       state.left.y = Math.min(Math.max(state.left.y || state.h / 2, paddleH / 2), state.h - paddleH / 2);
       state.right.y = Math.min(Math.max(state.right.y || state.h / 2, paddleH / 2), state.h - paddleH / 2);
-      if (state.parked) parkBallAt(state, oRectRef.current);
+      state.balls.forEach((b) => {
+        if (b.parked) parkBallAt(b, oRectsRef.current[b.oIndex], state.w, state.h);
+      });
     };
 
-    const beginPark = (towardLeft) => {
-      state.parked = true;
-      state.parkUntil = performance.now() + PARK_DELAY_MS;
-      state.pendingServeTowardLeft = towardLeft;
-      state.ball.vx = 0;
-      state.ball.vy = 0;
-      parkBallAt(state, oRectRef.current);
+    const beginParkBall = (ball, towardLeft, now) => {
+      ball.parked = true;
+      ball.parkUntil = now + delayForBall(ball.oIndex);
+      ball.serveTowardLeft = towardLeft;
+      parkBallAt(ball, oRectsRef.current[ball.oIndex], state.w, state.h);
     };
 
-    const serveFromPark = () => {
-      state.parked = false;
+    const serveBall = (ball) => {
+      ball.parked = false;
       const speed = state.h * BALL_SPEED_RATIO;
       const angle = (Math.random() * 0.5 - 0.25) * Math.PI;
-      state.ball.vx = (state.pendingServeTowardLeft ? -1 : 1) * speed * Math.cos(angle);
-      state.ball.vy = speed * Math.sin(angle);
+      ball.vx = (ball.serveTowardLeft ? -1 : 1) * speed * Math.cos(angle);
+      ball.vy = speed * Math.sin(angle);
     };
 
     sizeCanvas();
-    parkBallAt(state, oRectRef.current);
+    state.balls.forEach((b) => parkBallAt(b, oRectsRef.current[b.oIndex], state.w, state.h));
 
     const onResize = () => sizeCanvas();
     const onMouseMove = (e) => {
@@ -168,11 +209,78 @@ export default function Pong({ oRect }) {
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
 
-    const stepPhysics = (dt, now) => {
+    const ballRadius = (ball) => oRectsRef.current[ball.oIndex]?.r ?? BALL_RADIUS_FALLBACK;
+
+    const updateBall = (ball, dt, now) => {
       const paddleH = state.h * PADDLE_HEIGHT_RATIO;
       const halfP = paddleH / 2;
       const maxBallSpeed = state.h * BALL_MAX_SPEED_RATIO;
-      const ballR = oRectRef.current?.r ?? BALL_RADIUS_FALLBACK;
+      const r = ballRadius(ball);
+
+      if (ball.parked) {
+        if (now >= ball.parkUntil) serveBall(ball);
+        else {
+          parkBallAt(ball, oRectsRef.current[ball.oIndex], state.w, state.h);
+          return null;
+        }
+      }
+
+      ball.x += ball.vx * dt;
+      ball.y += ball.vy * dt;
+
+      if (ball.y - r < 0) {
+        ball.y = r;
+        ball.vy = Math.abs(ball.vy);
+      } else if (ball.y + r > state.h) {
+        ball.y = state.h - r;
+        ball.vy = -Math.abs(ball.vy);
+      }
+
+      const leftPaddleX = PADDLE_WIDTH;
+      const rightPaddleX = state.w - PADDLE_WIDTH;
+
+      if (
+        ball.vx < 0 &&
+        ball.x - r <= leftPaddleX + PADDLE_WIDTH / 2 &&
+        ball.x - r >= leftPaddleX - PADDLE_WIDTH &&
+        ball.y >= state.left.y - halfP &&
+        ball.y <= state.left.y + halfP
+      ) {
+        const offset = (ball.y - state.left.y) / halfP;
+        const speed = Math.min(Math.hypot(ball.vx, ball.vy) * BALL_SPEEDUP, maxBallSpeed);
+        const angle = offset * (Math.PI / 3);
+        ball.vx = Math.abs(speed * Math.cos(angle));
+        ball.vy = speed * Math.sin(angle);
+        ball.x = leftPaddleX + PADDLE_WIDTH / 2 + r;
+      }
+
+      if (
+        ball.vx > 0 &&
+        ball.x + r >= rightPaddleX - PADDLE_WIDTH / 2 &&
+        ball.x + r <= rightPaddleX + PADDLE_WIDTH &&
+        ball.y >= state.right.y - halfP &&
+        ball.y <= state.right.y + halfP
+      ) {
+        const offset = (ball.y - state.right.y) / halfP;
+        const speed = Math.min(Math.hypot(ball.vx, ball.vy) * BALL_SPEEDUP, maxBallSpeed);
+        const angle = offset * (Math.PI / 3);
+        ball.vx = -Math.abs(speed * Math.cos(angle));
+        ball.vy = speed * Math.sin(angle);
+        ball.x = rightPaddleX - PADDLE_WIDTH / 2 - r;
+      }
+
+      if (ball.x + r < 0) {
+        return { rightScored: true, leftScored: false };
+      }
+      if (ball.x - r > state.w) {
+        return { rightScored: false, leftScored: true };
+      }
+      return null;
+    };
+
+    const stepPhysics = (dt, now) => {
+      const paddleH = state.h * PADDLE_HEIGHT_RATIO;
+      const halfP = paddleH / 2;
 
       if (state.mouseY != null) {
         state.left.y = state.mouseY;
@@ -186,85 +294,46 @@ export default function Pong({ oRect }) {
       }
       state.left.y = Math.min(Math.max(state.left.y, halfP), state.h - halfP);
 
+      // AI tracks the most threatening ball: the closest one moving toward the AI.
       const aiSpeed = PLAYER_SPEED * AI_DIFFICULTY;
-      const aiTarget = !state.parked && state.ball.vx > 0 ? state.ball.y : state.h / 2;
+      let aiTarget = state.h / 2;
+      let bestDist = Infinity;
+      for (const b of state.balls) {
+        if (!b.parked && b.vx > 0) {
+          const dist = state.w - b.x;
+          if (dist < bestDist) {
+            bestDist = dist;
+            aiTarget = b.y;
+          }
+        }
+      }
       const aiDelta = aiTarget - state.right.y;
       const aiStep = Math.sign(aiDelta) * Math.min(Math.abs(aiDelta), aiSpeed * dt);
       state.right.y += aiStep;
       state.right.y = Math.min(Math.max(state.right.y, halfP), state.h - halfP);
 
-      if (state.parked) {
-        if (now >= state.parkUntil) serveFromPark();
-        else {
-          parkBallAt(state, oRectRef.current);
-          return;
-        }
-      }
-
-      state.ball.x += state.ball.vx * dt;
-      state.ball.y += state.ball.vy * dt;
-
-      if (state.ball.y - ballR < 0) {
-        state.ball.y = ballR;
-        state.ball.vy = Math.abs(state.ball.vy);
-      } else if (state.ball.y + ballR > state.h) {
-        state.ball.y = state.h - ballR;
-        state.ball.vy = -Math.abs(state.ball.vy);
-      }
-
-      const leftPaddleX = PADDLE_WIDTH;
-      const rightPaddleX = state.w - PADDLE_WIDTH;
-
-      if (
-        state.ball.vx < 0 &&
-        state.ball.x - ballR <= leftPaddleX + PADDLE_WIDTH / 2 &&
-        state.ball.x - ballR >= leftPaddleX - PADDLE_WIDTH &&
-        state.ball.y >= state.left.y - halfP &&
-        state.ball.y <= state.left.y + halfP
-      ) {
-        const offset = (state.ball.y - state.left.y) / halfP;
-        const speed = Math.min(Math.hypot(state.ball.vx, state.ball.vy) * BALL_SPEEDUP, maxBallSpeed);
-        const angle = offset * (Math.PI / 3);
-        state.ball.vx = Math.abs(speed * Math.cos(angle));
-        state.ball.vy = speed * Math.sin(angle);
-        state.ball.x = leftPaddleX + PADDLE_WIDTH / 2 + ballR;
-      }
-
-      if (
-        state.ball.vx > 0 &&
-        state.ball.x + ballR >= rightPaddleX - PADDLE_WIDTH / 2 &&
-        state.ball.x + ballR <= rightPaddleX + PADDLE_WIDTH &&
-        state.ball.y >= state.right.y - halfP &&
-        state.ball.y <= state.right.y + halfP
-      ) {
-        const offset = (state.ball.y - state.right.y) / halfP;
-        const speed = Math.min(Math.hypot(state.ball.vx, state.ball.vy) * BALL_SPEEDUP, maxBallSpeed);
-        const angle = offset * (Math.PI / 3);
-        state.ball.vx = -Math.abs(speed * Math.cos(angle));
-        state.ball.vy = speed * Math.sin(angle);
-        state.ball.x = rightPaddleX - PADDLE_WIDTH / 2 - ballR;
-      }
-
-      let scored = false;
-      let nextServeTowardLeft = true;
-      if (state.ball.x + ballR < 0) {
-        state.score[1] += 1;
-        scored = true;
-        nextServeTowardLeft = false;
-      } else if (state.ball.x - ballR > state.w) {
-        state.score[0] += 1;
-        scored = true;
-        nextServeTowardLeft = true;
-      }
-
-      if (scored) {
+      let scoreChanged = false;
+      let resetAll = false;
+      for (const ball of state.balls) {
+        const result = updateBall(ball, dt, now);
+        if (!result) continue;
+        if (result.leftScored) state.score[0] += 1;
+        if (result.rightScored) state.score[1] += 1;
+        scoreChanged = true;
         const total = state.score[0] + state.score[1];
         if (total >= RESET_AT_TOTAL_SCORE) {
           state.score = [0, 0];
-          nextServeTowardLeft = true;
+          resetAll = true;
+          break;
         }
+        beginParkBall(ball, result.rightScored, now);
+      }
+
+      if (resetAll) {
+        state.balls.forEach((b) => beginParkBall(b, true, now));
+      }
+      if (scoreChanged) {
         setScores([state.score[0], state.score[1]]);
-        beginPark(nextServeTowardLeft);
       }
     };
 
@@ -277,10 +346,12 @@ export default function Pong({ oRect }) {
       ctx.fillRect(PADDLE_WIDTH / 2, state.left.y - paddleH / 2, PADDLE_WIDTH, paddleH);
       ctx.fillRect(state.w - PADDLE_WIDTH * 1.5, state.right.y - paddleH / 2, PADDLE_WIDTH, paddleH);
 
-      const ballR = oRectRef.current?.r ?? BALL_RADIUS_FALLBACK;
-      ctx.beginPath();
-      ctx.arc(state.ball.x, state.ball.y, ballR, 0, Math.PI * 2);
-      ctx.fill();
+      for (const ball of state.balls) {
+        const r = ballRadius(ball);
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
       const digitH = Math.max(48, Math.min(96, state.h * 0.09));
       const topY = state.h * 0.04;
@@ -314,16 +385,4 @@ export default function Pong({ oRect }) {
   }, []);
 
   return <canvas ref={canvasRef} className="pong-canvas" aria-label={`Pong, score ${scores[0]} to ${scores[1]}`} />;
-}
-
-function parkBallAt(state, oRect) {
-  if (oRect) {
-    state.ball.x = oRect.x;
-    state.ball.y = oRect.y;
-  } else {
-    state.ball.x = state.w / 2;
-    state.ball.y = state.h / 2;
-  }
-  state.ball.vx = 0;
-  state.ball.vy = 0;
 }

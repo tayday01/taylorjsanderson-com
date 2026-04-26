@@ -2,24 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import Pong from './Pong.jsx';
 
 export default function App() {
-  const oRef = useRef(null);
-  const [oRect, setORect] = useState(null);
+  const oRefs = [useRef(null), useRef(null)];
+  const [oRects, setORects] = useState([null, null]);
 
   useEffect(() => {
     let rafId = 0;
     let timeoutId = 0;
 
-    const measure = () => {
-      const el = oRef.current;
-      if (!el) return;
-
+    const measureOne = (el) => {
+      if (!el) return null;
       const range = document.createRange();
       range.selectNodeContents(el);
       const rects = range.getClientRects();
       const layout = rects.length > 0 ? rects[0] : el.getBoundingClientRect();
       range.detach?.();
-
-      if (!layout || layout.width === 0 || layout.height === 0) return;
+      if (!layout || layout.width === 0 || layout.height === 0) return null;
 
       const cs = window.getComputedStyle(el);
       const fontSize = parseFloat(cs.fontSize);
@@ -35,8 +32,6 @@ export default function App() {
       let inkLeft = isFinite(m.actualBoundingBoxLeft) ? m.actualBoundingBoxLeft : 0;
       let inkRight = isFinite(m.actualBoundingBoxRight) ? m.actualBoundingBoxRight : m.width;
 
-      // Sanity-check: bad ink metrics on some mobile browsers fall back to
-      // x-height heuristic so the ball stays a reasonable "o"-sized dot.
       const inkW = inkLeft + inkRight;
       const inkH = inkAscent + inkDescent;
       let radius = (inkW + inkH) / 4;
@@ -52,11 +47,16 @@ export default function App() {
       const inkCenterYFromBaseline = (inkDescent - inkAscent) / 2;
       const inkCenterXFromOrigin = (inkRight - inkLeft) / 2;
 
-      setORect({
+      return {
         x: layout.left + inkCenterXFromOrigin,
         y: layout.top + baselineFromTop + inkCenterYFromBaseline,
         r: radius,
-      });
+      };
+    };
+
+    const measure = () => {
+      const next = oRefs.map((ref) => measureOne(ref.current));
+      setORects(next);
     };
 
     const scheduleMeasure = () => {
@@ -64,7 +64,6 @@ export default function App() {
       clearTimeout(timeoutId);
       rafId = requestAnimationFrame(() => {
         measure();
-        // Re-measure after layout/font settle (esp. mobile address bar).
         timeoutId = setTimeout(measure, 250);
       });
     };
@@ -86,11 +85,13 @@ export default function App() {
 
   return (
     <>
-      <Pong oRect={oRect} />
+      <Pong oRects={oRects} />
       <div className="hello-overlay" aria-label="Hello, world.">
         <span>Hell</span>
-        <span ref={oRef} className="hello-o-slot">o</span>
-        <span>, world.</span>
+        <span ref={oRefs[0]} className="hello-o-slot">o</span>
+        <span>, w</span>
+        <span ref={oRefs[1]} className="hello-o-slot">o</span>
+        <span>rld.</span>
       </div>
     </>
   );
