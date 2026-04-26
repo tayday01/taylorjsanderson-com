@@ -107,8 +107,8 @@ export default function Pong({ oRect }) {
     const sizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
       state.dpr = dpr;
-      state.w = window.innerWidth;
-      state.h = window.innerHeight;
+      state.w = window.visualViewport?.width ?? window.innerWidth;
+      state.h = window.visualViewport?.height ?? window.innerHeight;
       canvas.width = Math.floor(state.w * dpr);
       canvas.height = Math.floor(state.h * dpr);
       canvas.style.width = `${state.w}px`;
@@ -144,6 +144,12 @@ export default function Pong({ oRect }) {
     const onMouseMove = (e) => {
       state.mouseY = e.clientY;
     };
+    const onTouch = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        state.mouseY = e.touches[0].clientY;
+        if (e.cancelable) e.preventDefault();
+      }
+    };
     const onKeyDown = (e) => {
       if (['ArrowUp', 'ArrowDown', 'w', 'W', 's', 'S'].includes(e.key)) {
         state.keys.add(e.key.toLowerCase());
@@ -155,7 +161,10 @@ export default function Pong({ oRect }) {
     };
 
     window.addEventListener('resize', onResize);
+    window.visualViewport?.addEventListener('resize', onResize);
     window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchstart', onTouch, { passive: false });
+    window.addEventListener('touchmove', onTouch, { passive: false });
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('keyup', onKeyUp);
 
@@ -295,7 +304,10 @@ export default function Pong({ oRect }) {
     return () => {
       cancelAnimationFrame(state.raf);
       window.removeEventListener('resize', onResize);
+      window.visualViewport?.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchstart', onTouch);
+      window.removeEventListener('touchmove', onTouch);
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
     };
