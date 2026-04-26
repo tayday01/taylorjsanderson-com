@@ -1,6 +1,3 @@
-from datetime import datetime, timezone
-import platform
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,8 +20,4 @@ def health_live():
 
 @app.get("/v1/hello")
 def hello():
-    return {
-        "message": "Hello, world.",
-        "server_time_utc": datetime.now(timezone.utc).isoformat(),
-        "python_version": platform.python_version(),
-    }
+    return {"message": "Hello, world."}
