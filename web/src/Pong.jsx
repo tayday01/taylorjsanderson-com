@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const PADDLE_WIDTH = 14;
+const PADDLE_WIDTH = 19;
 const PADDLE_HEIGHT_RATIO = 0.18;
 const BALL_RADIUS_FALLBACK = 10;
 const PLAYER_SPEED = 800;
