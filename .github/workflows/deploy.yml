@@ -20,7 +20,10 @@ jobs:
           chmod 700 ~/.ssh
           printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo 'shadowlab.taylorjsanderson.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIubrhiuMoKw51P6BV5mU05Z/6w/GHdHE1SMwfYO4MJ0' > ~/.ssh/known_hosts
+          # Use droplet.taylorjsanderson.com (DNS-only A record) for SSH —
+          # web hostnames including www.taylorjsanderson.com are tunneled
+          # through Cloudflare and don't carry SSH (port 22).
+          echo 'droplet.taylorjsanderson.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIubrhiuMoKw51P6BV5mU05Z/6w/GHdHE1SMwfYO4MJ0' > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
       - name: Trigger deploy on droplet
@@ -28,7 +31,7 @@ jobs:
           ssh -i ~/.ssh/deploy_key \
               -o BatchMode=yes \
               -o ConnectTimeout=10 \
-              shadowlabs@shadowlab.taylorjsanderson.com
+              shadowlabs@droplet.taylorjsanderson.com
 
       - name: Verify site is healthy
         run: |
