@@ -31,7 +31,7 @@ jobs:
           ssh -i ~/.ssh/deploy_key \
               -o BatchMode=yes \
               -o ConnectTimeout=10 \
-              shadowlabs@droplet.taylorjsanderson.com
+              deploy@droplet.taylorjsanderson.com
 
       - name: Verify site is healthy
         run: |
