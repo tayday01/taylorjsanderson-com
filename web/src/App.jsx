@@ -8,14 +8,19 @@ const projects = [
 export default function App() {
   return (
     <main className="portfolio">
-      <h1 className="portfolio-name">Taylor Sanderson</h1>
-      <div className="card-grid">
-        {projects.map((p) => (
-          <a key={p.title} href={p.href} className="card">
-            <div className="card-image" style={{ background: p.accent }} aria-hidden="true" />
-            <div className="card-title">{p.title}</div>
-          </a>
-        ))}
+      <div className="portfolio-inner">
+        <header className="portfolio-header">
+          <h1 className="portfolio-name">Taylor Sanderson</h1>
+          <a className="portfolio-contact" href="mailto:tsandersin@gmail.com">contact</a>
+        </header>
+        <div className="card-grid">
+          {projects.map((p) => (
+            <a key={p.title} href={p.href} className="card">
+              <div className="card-image" style={{ background: p.accent }} aria-hidden="true" />
+              <div className="card-title">{p.title}</div>
+            </a>
+          ))}
+        </div>
       </div>
     </main>
   );

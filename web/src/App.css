@@ -20,12 +20,25 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
   padding: 2rem;
   box-sizing: border-box;
+}
+
+.portfolio-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  width: 100%;
+  max-width: 824px;
+}
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
 }
 
 .portfolio-name {
@@ -35,15 +48,33 @@ body {
   letter-spacing: -0.02em;
 }
 
+.portfolio-contact {
+  color: #111;
+  text-decoration: none;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition: opacity 200ms ease;
+}
+
+.portfolio-contact:hover,
+.portfolio-contact:focus-visible {
+  opacity: 0.55;
+  outline: none;
+}
+
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 325px));
+  grid-template-columns: repeat(2, minmax(0, 400px));
   gap: 1.5rem;
 }
 
 @media (max-width: 600px) {
+  .portfolio-inner {
+    max-width: 400px;
+  }
   .card-grid {
-    grid-template-columns: minmax(0, 325px);
+    grid-template-columns: minmax(0, 400px);
   }
 }
 
