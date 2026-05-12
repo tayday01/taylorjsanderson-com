@@ -37,13 +37,13 @@ body {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 260px));
+  grid-template-columns: repeat(2, minmax(0, 325px));
   gap: 1.5rem;
 }
 
 @media (max-width: 600px) {
   .card-grid {
-    grid-template-columns: minmax(0, 260px);
+    grid-template-columns: minmax(0, 325px);
   }
 }
 
