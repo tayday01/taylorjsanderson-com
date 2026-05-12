@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { findProject } from '../projects.js';
 
 // Christ Cathedral — Diocese of Orange, Johnson Fain, 2014–2016
@@ -12,11 +11,6 @@ export default function Crystal() {
 
   return (
     <article className="cs">
-      <Link to="/" className="cs-back">
-        <span className="cs-back-arrow" aria-hidden="true">←</span>
-        <span>Back to index</span>
-      </Link>
-
       {/* hero */}
       <div className="cs-hero">
         <img src={img('hero-exterior.jpg')} alt="Christ Cathedral exterior" />
@@ -357,14 +351,11 @@ export default function Crystal() {
 
       {/* Altar */}
       <section className="cs-element">
-        <div className="cs-element-head">
-          <div className="cs-element-title-block">
-            <h3 className="cs-element-title">Altar.</h3>
-            <span className="cs-element-where">Where it happens</span>
-          </div>
-          <p className="cs-element-desc">
-            Book-matched stone. Angular volumes, grain matched across faces. Sits in
-            front of the rood screen.
+        <h3 className="cs-element-title">Altar.</h3>
+        <div className="cs-element-tagline">
+          <span className="cs-element-where">Where it happens</span>
+          <p className="cs-element-desc-inline">
+            Book-matched stone. Angular volumes, grain matched across faces. Sits in front of the rood screen.
           </p>
         </div>
         <div className="cs-three-up">
@@ -391,13 +382,13 @@ export default function Crystal() {
 
       {/* Baptistry */}
       <section className="cs-element">
-        <div style={{ textAlign: 'right', marginBottom: '0.75rem' }}>
-          <h3 className="cs-element-title">Baptistry.</h3>
+        <h3 className="cs-element-title" style={{ textAlign: 'right' }}>Baptistry.</h3>
+        <div className="cs-element-tagline right">
+          <p className="cs-element-desc-inline">
+            Stone-clad vessel with an all-stone cross bath and custom coursing throughout.
+          </p>
           <span className="cs-element-where">Where it begins</span>
         </div>
-        <p className="cs-element-desc" style={{ maxWidth: 'none', marginBottom: 'clamp(2rem, 4vw, 3rem)' }}>
-          Stone-clad vessel with an all-stone cross bath and custom coursing throughout.
-        </p>
         <div className="cs-three-up">
           <div>
             <p className="cs-sublabel">Render · Resolved</p>
@@ -425,13 +416,13 @@ export default function Crystal() {
 
       {/* Ambo */}
       <section className="cs-element">
-        <div>
-          <h3 className="cs-element-title">Ambo.</h3>
+        <h3 className="cs-element-title">Ambo.</h3>
+        <div className="cs-element-tagline">
           <span className="cs-element-where">Where it's proclaimed</span>
+          <p className="cs-element-desc-inline">
+            Book-matched stone, cuts reference the quatrefoil.
+          </p>
         </div>
-        <p className="cs-element-desc" style={{ maxWidth: 'none', textAlign: 'right', marginTop: '0.75rem', marginBottom: 'clamp(2rem, 4vw, 3rem)' }}>
-          Book-matched stone, cuts reference the quatrefoil.
-        </p>
         <div className="cs-three-up">
           <div>
             <p className="cs-sublabel">Sketch · Loose</p>
@@ -459,13 +450,13 @@ export default function Crystal() {
 
       {/* Tester */}
       <section className="cs-element">
-        <div style={{ textAlign: 'right' }}>
-          <h3 className="cs-element-title">Tester.</h3>
+        <h3 className="cs-element-title" style={{ textAlign: 'right' }}>Tester.</h3>
+        <div className="cs-element-tagline right">
+          <p className="cs-element-desc-inline">
+            Metal square suspended over the altar. Vented fins filter the light; more commonly the baldachin.
+          </p>
           <span className="cs-element-where">Where it shines</span>
         </div>
-        <p className="cs-element-desc" style={{ maxWidth: 'none', textAlign: 'right', marginTop: '0.75rem', marginBottom: 'clamp(2rem, 4vw, 3rem)' }}>
-          Metal square suspended over the altar. Vented fins filter the light; more commonly the baldachin.
-        </p>
         <div className="cs-three-up">
           <div>
             <p className="cs-sublabel">Render · Resolved</p>

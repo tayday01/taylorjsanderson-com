@@ -29,6 +29,12 @@
   color-scheme: light;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
@@ -118,11 +124,31 @@ body {
 .topbar-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 1.25rem clamp(1.25rem, 4vw, 3rem);
+  padding: 0.875rem clamp(1.25rem, 4vw, 3rem) 1rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* back-to-index arrow inside the sticky topbar — appears on any
+   non-landing route, persists while scrolling. Sits below the brand
+   block, left-aligned to the same content edge as the body. */
+.topbar-back {
+  display: inline-block;
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-decoration: none;
+  padding: 0.25rem 0.75rem 0.25rem 0;
+  transition: color var(--t-fast) var(--ease), transform var(--t-base) var(--ease);
+}
+
+.topbar-back:hover,
+.topbar-back:focus-visible {
+  color: var(--accent);
+  transform: translateX(-3px);
+  outline: none;
 }
 
 .topbar-brand {
@@ -316,7 +342,6 @@ body {
 }
 
 .card:focus-visible .card-image-wrap {
-  border-color: var(--ink);
   box-shadow: 0 0 0 3px var(--accent);
 }
 
@@ -325,13 +350,7 @@ body {
   width: 100%;
   aspect-ratio: 4 / 3;
   background: var(--bg-soft);
-  border: 1px solid var(--rule);
   overflow: hidden;
-  transition: border-color var(--t-base) var(--ease);
-}
-
-.card:hover .card-image-wrap {
-  border-color: var(--ink);
 }
 
 .card-image {
@@ -615,7 +634,6 @@ body {
   margin: 0.75rem 0 0;
   width: 100%;
   aspect-ratio: 16 / 10;
-  border: 1px solid var(--rule);
   overflow: hidden;
   position: relative;
 }
@@ -639,7 +657,6 @@ body {
   width: 100%;
   display: block;
   margin: 1rem 0;
-  border: 1px solid var(--rule);
 }
 
 .project-empty {
@@ -917,11 +934,10 @@ body {
   .cs-stat-row.three-up { grid-template-columns: 1fr; gap: 2rem; }
 }
 
-/* media frame — bordered image container */
+/* media frame — borderless image container */
 .cs-media {
   position: relative;
   width: 100%;
-  border: 1px solid var(--rule);
   background: var(--bg-soft);
   overflow: hidden;
 }
@@ -1102,6 +1118,43 @@ body {
   margin: 0;
 }
 
+/* tagline row — orange eyebrow + description on the same horizontal
+   line, opposed sides via flex space-between. Description is one line. */
+.cs-element-tagline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  margin: 0.5rem 0 clamp(2rem, 4vw, 3rem);
+}
+
+.cs-element-tagline .cs-element-where {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.cs-element-desc-inline {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+@media (max-width: 880px) {
+  .cs-element-tagline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .cs-element-tagline.right {
+    align-items: flex-end;
+  }
+  .cs-element-desc-inline {
+    white-space: normal;
+  }
+}
+
 @media (max-width: 880px) {
   .cs-element-head,
   .cs-element-head.right { grid-template-columns: 1fr; }
@@ -1109,9 +1162,10 @@ body {
   .cs-element-head.right .cs-element-desc { grid-column: 1; grid-row: auto; }
 }
 
-/* outcome closing pull-quote */
+/* outcome closing pull-quote — visually centered in the closing
+   white space between the stats above and the page bottom. */
 .cs-pull {
-  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  margin: clamp(8rem, 14vw, 10rem) 0 0;
   font-size: clamp(1.5rem, 2.6vw, 2rem);
   font-weight: 500;
   line-height: 1.4;

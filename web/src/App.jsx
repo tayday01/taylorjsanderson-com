@@ -4,6 +4,9 @@ import Landing from './routes/Landing.jsx';
 import Project from './routes/Project.jsx';
 
 function TopBar() {
+  const { pathname } = useLocation();
+  const isProject = pathname !== '/';
+
   return (
     <header className="topbar" role="banner">
       <div className="topbar-inner">
@@ -13,6 +16,11 @@ function TopBar() {
           </p>
           <span className="topbar-label">Designer · Portfolio 2026</span>
         </div>
+        {isProject && (
+          <Link to="/" className="topbar-back" aria-label="Back to index">
+            <span aria-hidden="true">←</span>
+          </Link>
+        )}
       </div>
     </header>
   );
