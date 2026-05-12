@@ -1,27 +1,54 @@
-const projects = [
-  { title: 'Project One', href: '#', accent: '#e76f51' },
-  { title: 'Project Two', href: '#', accent: '#2a9d8f' },
-  { title: 'Project Three', href: '#', accent: '#e9c46a' },
-  { title: 'Project Four', href: '#', accent: '#264653' },
-];
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, Link, Navigate, useLocation } from 'react-router-dom';
+import Landing from './routes/Landing.jsx';
+import Project from './routes/Project.jsx';
+
+function TopBar() {
+  return (
+    <header className="topbar" role="banner">
+      <div className="topbar-inner">
+        <div className="topbar-brand">
+          <p className="topbar-name">
+            <Link to="/">Taylor Sanderson</Link>
+          </p>
+          <span className="topbar-label">Designer · Portfolio 2026</span>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Layout() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return (
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <div className="portfolio">
+        <TopBar />
+        <div className="portfolio-inner">
+          <div id="main" tabIndex={-1}>
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
 
 export default function App() {
   return (
-    <main className="portfolio">
-      <div className="portfolio-inner">
-        <header className="portfolio-header">
-          <h1 className="portfolio-name">Taylor Sanderson</h1>
-          <a className="portfolio-contact" href="mailto:tsandersin@gmail.com">contact</a>
-        </header>
-        <div className="card-grid">
-          {projects.map((p) => (
-            <a key={p.title} href={p.href} className="card">
-              <div className="card-image" style={{ background: p.accent }} aria-hidden="true" />
-              <div className="card-title">{p.title}</div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/:slug" element={<Project />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
