@@ -41,13 +41,14 @@ export const projects = [
     body: [],
   },
   {
-    slug: 'r20',
-    title: 'R20',
+    slug: 'rollette',
+    title: 'Rollette',
     accent: '#e9c46a',
     year: '2025',
     role: 'Product designer',
     tags: ['Mobile', 'Consumer'],
     summary: 'A daily ritual app — small habits, scheduled with intention.',
+    liveUrl: 'https://rollette.taylorjsanderson.com/',
     body: [],
   },
   {

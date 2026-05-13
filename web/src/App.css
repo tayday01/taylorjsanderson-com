@@ -626,6 +626,39 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* External live-site link rendered on default project pages
+   when projects.js sets a liveUrl. */
+.project-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+  width: fit-content;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-muted);
+  padding-bottom: 0.15rem;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+.project-live-arrow {
+  display: inline-block;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.project-live:hover,
+.project-live:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  outline: none;
+}
+
+.project-live:hover .project-live-arrow,
+.project-live:focus-visible .project-live-arrow {
+  transform: translate(3px, -3px);
+}
+
 .project-summary {
   margin: 0;
   font-size: 1.0625rem;

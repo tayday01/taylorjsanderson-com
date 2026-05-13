@@ -31,11 +31,23 @@ export default function Project() {
 
   // Default project template — title + accent cover card.
   // Back-to-index arrow is provided by the sticky topbar in App.jsx.
+  // Optional liveUrl field renders an external "Visit live site" link.
   // To turn a project into a full case study, add a custom component
   // (see Crystal.jsx) and register it in CASE_STUDIES above.
   return (
     <article className="project">
       <h1 className="project-title">{project.title}</h1>
+      {project.liveUrl && (
+        <a
+          className="project-live"
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>Visit live site</span>
+          <span className="project-live-arrow" aria-hidden="true">↗</span>
+        </a>
+      )}
       <div className="project-cover-wrap">
         <div className="project-cover" style={{ background: project.accent }} aria-hidden="true" />
       </div>
