@@ -491,6 +491,10 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 
+.contact-links li:last-child {
+  border-bottom: none;
+}
+
 .contact-link {
   display: grid;
   grid-template-columns: auto 1fr auto;
