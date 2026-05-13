@@ -360,17 +360,17 @@ export default function Crystal() {
             Book-matched stone. Angular volumes, grain matched across faces. Sits in front of the rood screen.
           </p>
         </div>
-        <div className="cs-three-up" style={{ gridTemplateColumns: '1.25fr 1fr 1fr' }}>
+        <div className="cs-three-up" style={{ gridTemplateColumns: '1fr 1.25fr 1fr' }}>
           <div>
             <p className="cs-sublabel">Sketch · Loose</p>
-            <div className="cs-media contain" style={{ aspectRatio: '1 / 1' }}>
-              <img src={img('altar-sketch.png')} alt="Altar sketch" />
+            <div className="cs-media contain" style={{ aspectRatio: '4 / 3' }}>
+              <img src={img('altar-drawings.png')} alt="Altar sketch" />
             </div>
           </div>
           <div>
             <p className="cs-sublabel">Drawings · Build</p>
-            <div className="cs-media contain" style={{ aspectRatio: '4 / 3' }}>
-              <img src={img('altar-drawings.png')} alt="Altar drawings" />
+            <div className="cs-media contain" style={{ aspectRatio: '1 / 1' }}>
+              <img src={img('altar-sketch.png')} alt="Altar drawings" />
             </div>
           </div>
           <div>
@@ -391,7 +391,7 @@ export default function Crystal() {
           </p>
           <span className="cs-element-where">Where it begins</span>
         </div>
-        <div className="cs-three-up">
+        <div className="cs-three-up" style={{ gridTemplateColumns: '1fr 1fr 1.25fr' }}>
           <div>
             <p className="cs-sublabel">Render · Resolved</p>
             <div className="cs-media" style={{ aspectRatio: '4 / 3' }}>
@@ -429,7 +429,7 @@ export default function Crystal() {
           <div>
             <p className="cs-sublabel">Sketch · Loose</p>
             <div className="cs-media contain" style={{ aspectRatio: '4 / 3' }}>
-              <img src={img('ambo-section.png')} alt="Ambo sketch" />
+              <img src={img('ambo-drawings.png')} alt="Ambo sketch" />
             </div>
           </div>
           <div>
@@ -438,7 +438,7 @@ export default function Crystal() {
               <img src={img('ambo-elevation.png')} alt="Ambo elevation" />
             </div>
             <div className="cs-media contain" style={{ aspectRatio: '7 / 4', marginTop: '0.875rem' }}>
-              <img src={img('ambo-drawings.png')} alt="Ambo drawings" />
+              <img src={img('ambo-section.png')} alt="Ambo plan / section" />
             </div>
           </div>
           <div>
