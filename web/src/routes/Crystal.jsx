@@ -115,7 +115,7 @@ export default function Crystal() {
           <span className="cs-lead-accent">It was the volume after the panels were installed.</span>
         </p>
 
-        <div className="cs-prose" style={{ textAlign: 'left', marginTop: 'clamp(1.5rem, 3vw, 2.5rem)', marginLeft: 'auto' }}>
+        <div className="cs-prose" style={{ textAlign: 'left', marginTop: 'clamp(5rem, 9vw, 7rem)', marginBottom: 'clamp(3rem, 6vw, 5rem)', marginLeft: 'auto' }}>
           <p>
             The light Johnson's all-glass envelope produced had been the building's
             signature for forty years. It had also made the interior thermally and
@@ -139,14 +139,14 @@ export default function Crystal() {
       </div>
 
       <section className="cs-section" style={{ borderTop: 'none', paddingTop: 'clamp(2rem, 4vw, 3rem)' }}>
-        <div className="cs-two-col">
+        <div className="cs-two-col" style={{ alignItems: 'stretch' }}>
           <div>
             {/* Grid image spans the entire left column */}
             <div className="cs-media" style={{ aspectRatio: '3 / 4' }}>
               <img src={img('quatrefoil-grid.png')} alt="Quatrefoil grid pattern" />
             </div>
           </div>
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div className="cs-prose">
               <p>
                 Scott Johnson conceived the quatrefoil unit, modernized four-leaf-clover
@@ -157,8 +157,10 @@ export default function Crystal() {
                 fabrication-ready DXF for water-jet cutting.
               </p>
             </div>
-            {/* 3-quatrefoils unit image, placed under the text paragraph */}
-            <div className="cs-media contain" style={{ aspectRatio: '5 / 2', marginTop: 'clamp(1.5rem, 3vw, 2.25rem)' }}>
+            {/* 3-quatrefoils unit image — vertically centered in the
+                remaining white space between the prose above and the
+                section divider below. */}
+            <div className="cs-media contain" style={{ aspectRatio: '5 / 2', marginTop: 'auto', marginBottom: 'auto' }}>
               <img src={img('quatrefoil-unit.png')} alt="Quatrefoil unit iterations" />
             </div>
           </div>
@@ -192,7 +194,7 @@ export default function Crystal() {
             <div className="cs-media contain" style={{ aspectRatio: '2 / 3' }}>
               <img src={img('dot-pattern-study.png')} alt="Perforation dot pattern study" />
             </div>
-            <p className="cs-sublabel" style={{ marginTop: '0.75rem' }}>Perforation pattern</p>
+            <p className="cs-cap">Perforation pattern.</p>
           </div>
         </div>
 
@@ -358,7 +360,7 @@ export default function Crystal() {
             Book-matched stone. Angular volumes, grain matched across faces. Sits in front of the rood screen.
           </p>
         </div>
-        <div className="cs-three-up">
+        <div className="cs-three-up" style={{ gridTemplateColumns: '1.25fr 1fr 1fr' }}>
           <div>
             <p className="cs-sublabel">Sketch · Loose</p>
             <div className="cs-media contain" style={{ aspectRatio: '1 / 1' }}>
@@ -423,7 +425,7 @@ export default function Crystal() {
             Book-matched stone, cuts reference the quatrefoil.
           </p>
         </div>
-        <div className="cs-three-up">
+        <div className="cs-three-up" style={{ gridTemplateColumns: '1.25fr 1fr 1fr' }}>
           <div>
             <p className="cs-sublabel">Sketch · Loose</p>
             <div className="cs-media contain" style={{ aspectRatio: '4 / 3' }}>
