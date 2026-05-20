@@ -781,9 +781,13 @@ body {
 
 .cs-hero-title {
   position: absolute;
-  left: clamp(1.25rem, 4vw, 3rem);
+  left: 0;
+  right: 0;
   bottom: clamp(2rem, 5vw, 3.5rem);
-  right: clamp(1.25rem, 4vw, 3rem);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

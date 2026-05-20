@@ -110,21 +110,23 @@ export default function Crystal() {
         <span className="cs-eyebrow-num">02 / 06 · Insight</span>
         <h2 className="cs-display">Insight.</h2>
 
-        <p className="cs-lead" style={{ textAlign: 'left', marginTop: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-          The deliverable was never the panels.<br />
-          <span className="cs-lead-accent">It was the volume after the panels were installed.</span>
-        </p>
-
-        <div className="cs-prose" style={{ textAlign: 'left', marginTop: 'clamp(5rem, 9vw, 7rem)', marginBottom: 'clamp(3rem, 6vw, 5rem)', marginLeft: 'auto' }}>
-          <p>
-            The light Johnson's all-glass envelope produced had been the building's
-            signature for forty years. It had also made the interior thermally and
-            visually demanding. The Diocese needed a sanctuary that could hold a
-            congregation comfortably, preserve the volume Johnson had designed, and
-            accommodate a Catholic liturgical program the original building had never
-            been built for. The shading system had to do both jobs at once: cut solar
-            gain, and let the building feel sacred.
+        <div className="cs-two-col" style={{ textAlign: 'left', marginTop: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
+          <p className="cs-lead">
+            The deliverable was never the panels.<br />
+            <span className="cs-lead-accent">It was the volume after the panels were installed.</span>
           </p>
+
+          <div className="cs-prose">
+            <p>
+              The light Johnson's all-glass envelope produced had been the building's
+              signature for forty years. It had also made the interior thermally and
+              visually demanding. The Diocese needed a sanctuary that could hold a
+              congregation comfortably, preserve the volume Johnson had designed, and
+              accommodate a Catholic liturgical program the original building had never
+              been built for. The shading system had to do both jobs at once: cut solar
+              gain, and let the building feel sacred.
+            </p>
+          </div>
         </div>
       </section>
 
