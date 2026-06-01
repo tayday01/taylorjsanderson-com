@@ -243,8 +243,8 @@ export default function Crit() {
             <img src={img('reference-studio.jpg')} alt="Precedent — margin notes, studio crit" />
           </div>
           <div className="crit-refs-cap reveal">
-            <span className="crit-marker">Precedent — marginalia from a working architecture studio, 2018</span>
-            <p>Six years before the first prompt, the same instinct: a critic that writes in the margin, names what isn't working, and leaves the next move to the author.</p>
+            <span className="crit-marker">Precedent — the studio crit. Pin-ups, panels, red pen in the margin.</span>
+            <p>The form is older than the tool. Architecture studios, fashion ateliers, art programs every discipline runs some version of the same loop: work on the wall, a panel reads it, someone marks it up, the author walks back to the desk to fix what got named. Crit is that loop made portable, with the panel collapsed to a single critic that doesn't soften.</p>
           </div>
         </div>
       </section>
@@ -256,7 +256,7 @@ export default function Crit() {
             <span className="crit-marker">06 — Reflection</span>
           </div>
           <p className="reveal crit-reflect-p">
-            <em>The thing I underestimated</em> was the cost of the tone. Building the structure took a weekend; building a voice that doesn't apologize took six months and most of my opinions. I think that's the real artifact here: the prompt, not the product around it. The product is a wrapper around a decision about how to talk about design, and the decision is the work.
+            <em>What I underestimated</em> was how often I'd argue with my own product. Every time Crit returned a hard read on something I'd made, the first instinct was to push back not because it was wrong, but because it wasn't generous. Building a critic that refuses to flatter taught me how often I flatter my own work to keep the room comfortable. The product is sharper than I am, by design. That's the point, and it's still uncomfortable.
           </p>
         </div>
       </section>
