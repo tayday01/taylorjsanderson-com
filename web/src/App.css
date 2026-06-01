@@ -1490,12 +1490,13 @@ body {
   display: block;
   width: 100%;
   margin-top: clamp(40px, 6vw, 72px);
-  aspect-ratio: 1168 / 1180;        /* hero.gif native ratio */
+  aspect-ratio: 1168 / 1180;        /* hero.mp4 native ratio */
   background: rgba(10, 10, 10, 0.04);
   overflow: hidden;
   border-radius: 4px;
 }
-.crit-hero-shot img {
+.crit-hero-shot img,
+.crit-hero-shot video {
   display: block;
   width: 100%;
   height: 100%;
@@ -1607,7 +1608,8 @@ body {
   aspect-ratio: 1501 / 1279;
   background: rgba(255, 255, 255, 0.04);
 }
-.crit-beat-media img {
+.crit-beat-media img,
+.crit-beat-media video {
   display: block;
   width: 100%;
   height: 100%;

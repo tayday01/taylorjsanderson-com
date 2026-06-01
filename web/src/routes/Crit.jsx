@@ -39,6 +39,10 @@ function useReveal() {
 export default function Crit() {
   useReveal();
 
+  // React doesn't reliably set the muted *property* from the attribute,
+  // and muted is required for autoplay — force it on via ref.
+  const autoplayVideo = (el) => { if (el) el.muted = true; };
+
   return (
     <article className="crit" id="crit-top">
       {/* §01 HERO */}
@@ -56,7 +60,16 @@ export default function Crit() {
           It looks at a single screen, returns a structured critique across five disciplines, and refuses to be flattering.
         </p>
         <div className="crit-hero-shot reveal">
-          <img src={img('hero.gif')} alt="Crit — the critique loop" />
+          <video
+            ref={autoplayVideo}
+            src={img('hero.mp4')}
+            poster={img('hero-poster.jpg')}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label="Crit — the critique loop"
+          />
         </div>
         <div className="crit-meta-rule reveal">
           <span className="crit-marker"><b>Role</b> · Design, prompt design, frontend</span>
@@ -128,7 +141,16 @@ export default function Crit() {
               <span className="crit-marker r">Fig · 02</span>
             </div>
             <div className="crit-beat-media on-dark" style={{ aspectRatio: '1168 / 1180' }}>
-              <img src={img('loading.gif')} alt="Thinking — loading loop" />
+              <video
+                ref={autoplayVideo}
+                src={img('loading.mp4')}
+                poster={img('loading-poster.jpg')}
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-label="Thinking — loading loop"
+              />
             </div>
             <figcaption>The model reads the screen out loud, badly, then quietly, line by line, until the page sits still.</figcaption>
           </figure>

@@ -27,7 +27,7 @@ export const projects = [
     role: 'Design, prompt design, frontend',
     tags: ['Product', 'AI', 'Tooling'],
     summary: 'An AI critique tool for visual design work. One screen in, five disciplines out, a tone that doesn\'t flinch.',
-    cover: '/images/crit/hero.gif',
+    cover: '/images/crit/hero-poster.jpg',
     body: [],
   },
   {
