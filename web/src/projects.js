@@ -22,11 +22,12 @@ export const projects = [
   {
     slug: 'crit',
     title: 'Crit',
-    accent: '#e76f51',
-    year: '2024',
-    role: 'Lead designer',
-    tags: ['Product', 'Tooling'],
-    summary: 'A workspace for design teams to give and receive sharper critique.',
+    accent: '#dc2826',
+    year: '2025–2026',
+    role: 'Design, prompt design, frontend',
+    tags: ['Product', 'AI', 'Tooling'],
+    summary: 'An AI critique tool for visual design work. One screen in, five disciplines out, a tone that doesn\'t flinch.',
+    cover: '/images/crit/hero-temp.jpg',
     body: [],
   },
   {
