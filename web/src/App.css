@@ -124,23 +124,24 @@ body {
 .topbar-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0.875rem clamp(1.25rem, 4vw, 3rem) 1rem;
+  padding: 1.2rem clamp(1.25rem, 4vw, 3rem);
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.875rem;
 }
 
 /* back-to-index arrow inside the sticky topbar — appears on any
-   non-landing route, persists while scrolling. Sits below the brand
-   block, left-aligned to the same content edge as the body. */
+   non-landing route, persists while scrolling. Sits to the left of
+   the brand block, aligned to the same content edge as the body. */
 .topbar-back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   color: var(--ink);
   font-size: 1.5rem;
   line-height: 1;
   text-decoration: none;
-  padding: 0.25rem 0.75rem 0.25rem 0;
+  padding: 0;
   transition: color var(--t-fast) var(--ease), transform var(--t-base) var(--ease);
 }
 
@@ -1314,9 +1315,10 @@ body {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .topbar {
-    gap: 0.75rem;
-    flex-wrap: wrap;
+  .topbar-label {
+    /* tighten tracking so the brand label holds one line beside the
+       back arrow on narrow screens (keeps the header ~75px tall). */
+    letter-spacing: 0.1em;
   }
   .topbar-meta {
     display: none;

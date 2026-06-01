@@ -10,17 +10,17 @@ function TopBar() {
   return (
     <header className="topbar" role="banner">
       <div className="topbar-inner">
+        {isProject && (
+          <Link to="/" className="topbar-back" aria-label="Back to index">
+            <span aria-hidden="true">←</span>
+          </Link>
+        )}
         <div className="topbar-brand">
           <p className="topbar-name">
             <Link to="/">Taylor Sanderson</Link>
           </p>
           <span className="topbar-label">Designer · Architect · Portfolio 2026</span>
         </div>
-        {isProject && (
-          <Link to="/" className="topbar-back" aria-label="Back to index">
-            <span aria-hidden="true">←</span>
-          </Link>
-        )}
       </div>
     </header>
   );
