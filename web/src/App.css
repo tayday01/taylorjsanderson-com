@@ -1547,8 +1547,10 @@ body {
   font-weight: 400;
   color: rgba(255, 255, 255, 0.55);
 }
-.crit-walk-intro {
-  margin: clamp(40px, 5vw, 64px) 0 0 calc(var(--crit-colw) + var(--crit-gut));
+/* `.crit` ancestor raises specificity above `.crit p` so the intro's
+   top spacing and content-column indent actually apply. */
+.crit .crit-walk-intro {
+  margin: clamp(64px, 8vw, 104px) 0 0 calc(var(--crit-colw) + var(--crit-gut));
   max-width: 30em;
   font-style: italic;
   font-size: 16px;
@@ -1917,7 +1919,7 @@ body {
     row-gap: 18px;
   }
   .crit-walk-quote .crit-marker { order: -1; }
-  .crit-walk-intro { margin-left: 0; }
+  .crit .crit-walk-intro { margin-left: 0; }
   .crit-lede { max-width: none; }
 }
 @media (max-width: 600px) {
