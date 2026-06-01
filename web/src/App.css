@@ -191,6 +191,16 @@ body {
   outline: none;
 }
 
+/* Couple the back arrow and the title: hovering either one puts both
+   into the hover state (accent color, and the arrow nudges left). */
+.topbar-brand:has(.topbar-name a:hover, .topbar-back:hover) .topbar-name a {
+  color: var(--accent);
+}
+.topbar-brand:has(.topbar-name a:hover, .topbar-back:hover) .topbar-back {
+  color: var(--accent);
+  transform: translateY(-50%) translateX(-3px);
+}
+
 .topbar-status {
   display: inline-flex;
   align-items: center;
