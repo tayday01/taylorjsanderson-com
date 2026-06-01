@@ -270,7 +270,12 @@ export default function Crit() {
         <div className="crit-cta-body reveal">
           <p className="crit-cta-line">Paste a screen.<em>Get a read.</em></p>
           <div className="crit-cta-action">
-            <a className="crit-btn" href="#crit-top">
+            <a
+              className="crit-btn"
+              href="https://crit.taylorjsanderson.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Try Crit <span aria-hidden="true">→</span>
             </a>
             <p className="crit-fine">
