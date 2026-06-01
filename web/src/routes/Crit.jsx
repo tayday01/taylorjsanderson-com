@@ -125,10 +125,10 @@ export default function Crit() {
           <figure className="crit-beat reveal">
             <div className="crit-beat-head">
               <span className="crit-marker">Beat B — Thinking</span>
-              <span className="crit-marker r">Fig · 02 · placeholder</span>
+              <span className="crit-marker r">Fig · 02</span>
             </div>
-            <div className="crit-beat-media on-dark">
-              <img src={img('loading-temp.jpg')} alt="Thinking — loading loop" />
+            <div className="crit-beat-media on-dark" style={{ aspectRatio: '1168 / 1180' }}>
+              <img src={img('loading.gif')} alt="Thinking — loading loop" />
             </div>
             <figcaption>The model reads the screen out loud, badly, then quietly, line by line, until the page sits still.</figcaption>
           </figure>
