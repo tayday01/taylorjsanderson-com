@@ -126,15 +126,19 @@ body {
   margin: 0 auto;
   padding: 1.2rem clamp(1.25rem, 4vw, 3rem);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.875rem;
 }
 
 /* back-to-index arrow inside the sticky topbar — appears on any
-   non-landing route, persists while scrolling. Sits to the left of
-   the brand block, aligned to the same content edge as the body. */
+   non-landing route, persists while scrolling. Absolutely positioned
+   so it hangs in the left gutter, OUTSIDE the brand's content-edge
+   alignment, without nudging the name/label off the content edge. */
 .topbar-back {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 0.6rem;
   display: inline-flex;
   align-items: center;
   color: var(--ink);
@@ -148,11 +152,12 @@ body {
 .topbar-back:hover,
 .topbar-back:focus-visible {
   color: var(--accent);
-  transform: translateX(-3px);
+  transform: translateY(-50%) translateX(-3px);
   outline: none;
 }
 
 .topbar-brand {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -1319,6 +1324,12 @@ body {
     /* tighten tracking so the brand label holds one line beside the
        back arrow on narrow screens (keeps the header ~75px tall). */
     letter-spacing: 0.1em;
+  }
+  .topbar-back {
+    /* the left gutter shrinks to ~20px on phones, so trim the hanging
+       arrow + its gap to fit without overflowing the viewport edge. */
+    font-size: 1.1rem;
+    margin-right: 0.25rem;
   }
   .topbar-meta {
     display: none;
