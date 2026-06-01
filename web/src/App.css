@@ -1490,7 +1490,7 @@ body {
   display: block;
   width: 100%;
   margin-top: clamp(40px, 6vw, 72px);
-  aspect-ratio: 1501 / 1279;
+  aspect-ratio: 1168 / 1180;        /* hero.gif native ratio */
   background: rgba(10, 10, 10, 0.04);
   overflow: hidden;
   border-radius: 4px;

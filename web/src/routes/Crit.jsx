@@ -56,7 +56,7 @@ export default function Crit() {
           It looks at a single screen, returns a structured critique across five disciplines, and refuses to be flattering.
         </p>
         <div className="crit-hero-shot reveal">
-          <img src={img('hero-temp.jpg')} alt="Crit — the critique loop" />
+          <img src={img('hero.gif')} alt="Crit — the critique loop" />
         </div>
         <div className="crit-meta-rule reveal">
           <span className="crit-marker"><b>Role</b> · Design, prompt design, frontend</span>
