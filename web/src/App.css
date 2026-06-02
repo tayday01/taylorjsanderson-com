@@ -735,6 +735,46 @@ body {
   filter: grayscale(0.08);
 }
 
+/* live-tool CTA page (e.g. Rollette): a large primary button + supporting
+   copy in place of the placeholder cover. */
+.project-cta-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0.75rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.01em;
+  padding: 17px 32px;
+  border-radius: 5px;
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.project-cta-btn span {
+  display: inline-block;
+  transition: transform var(--t-base) var(--ease);
+}
+.project-cta-btn:hover,
+.project-cta-btn:focus-visible {
+  background: #e63600;
+  outline: none;
+}
+.project-cta-btn:hover span,
+.project-cta-btn:focus-visible span {
+  transform: translateX(4px);
+}
+
+.project-cta-copy {
+  margin: 0.25rem 0 0;
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
 .project-paragraph {
   margin: 0.5rem 0;
   font-size: 0.9375rem;

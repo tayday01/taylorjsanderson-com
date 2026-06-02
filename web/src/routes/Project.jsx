@@ -2,12 +2,14 @@ import { Navigate, useParams } from 'react-router-dom';
 import { findProject } from '../projects.js';
 import Crystal from './Crystal.jsx';
 import Crit from './Crit.jsx';
+import Rollette from './Rollette.jsx';
 
 // Custom case-study components by slug. Slugs not listed here fall through
 // to the default project template below.
 const CASE_STUDIES = {
   crystal: Crystal,
   crit: Crit,
+  rollette: Rollette,
 };
 
 function renderBlock(block, i) {
