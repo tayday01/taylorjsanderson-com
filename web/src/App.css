@@ -794,6 +794,14 @@ body {
   color: var(--ink-muted);
 }
 
+.project-coming-image {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin-top: 0.75rem;
+}
+
 .project-paragraph {
   margin: 0.5rem 0;
   font-size: 0.9375rem;
