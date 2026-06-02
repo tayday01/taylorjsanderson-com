@@ -31,21 +31,21 @@ export default function Landing() {
           <li>
             <a className="contact-link" href="mailto:taylor.j.sanderson@gmail.com">
               <span className="contact-link-key">Mail</span>
-              <span>taylor.j.sanderson@gmail.com</span>
+              <span className="contact-link-copy">taylor.j.sanderson@gmail.com</span>
               <span className="contact-link-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
           <li>
             <a className="contact-link" href="/Taylor_Sanderson_Resume_2026.pdf" download rel="noopener noreferrer">
               <span className="contact-link-key">CV</span>
-              <span>Download resume (PDF)</span>
+              <span className="contact-link-copy">Download resume (PDF)</span>
               <span className="contact-link-arrow" aria-hidden="true">↓</span>
             </a>
           </li>
           <li>
             <a className="contact-link" href="https://www.linkedin.com/in/taylorsande/" target="_blank" rel="noopener noreferrer">
               <span className="contact-link-key">LinkedIn</span>
-              <span>linkedin.com/in/taylorsande</span>
+              <span className="contact-link-copy">linkedin.com/in/taylorsande</span>
               <span className="contact-link-arrow" aria-hidden="true">↗</span>
             </a>
           </li>

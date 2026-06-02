@@ -491,11 +491,6 @@ body {
      left-aligned within the block. Nudged further right + down. */
   width: calc(50% - clamp(1.5rem, 3vw, 2.5rem) / 2);
   margin-left: auto;
-  /* position offset (not transform — a load animation owns transform here) */
-  position: relative;
-  left: 150px;
-  top: 100px;
-  margin-bottom: 100px; /* keep the down-shift inside the scrollable page */
 }
 
 .contact-label {
@@ -556,6 +551,13 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   min-width: 4.5rem;
+}
+
+/* slide the copy toward the right-side arrow (up to ~150px). The block and
+   arrows stay put; this backs off on narrower screens so the copy never
+   runs into the arrow. */
+.contact-link-copy {
+  margin-left: clamp(0px, calc((100vw - 760px) * 0.42), 150px);
 }
 
 .contact-link-arrow {
@@ -1359,10 +1361,6 @@ body {
   .contact {
     width: auto;
     margin-left: 0;
-    position: static;
-    left: auto;
-    top: auto;
-    margin-bottom: 0;
   }
   .topbar-label {
     /* tighten tracking so the brand label holds one line beside the
