@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
 import { projects } from '../projects.js';
 
-const pad2 = (n) => String(n).padStart(2, '0');
-
 export default function Landing() {
   return (
     <>
       <div className="card-grid">
-        {projects.map((p, i) => (
+        {projects.map((p) => (
           <Link key={p.slug} to={`/${p.slug}`} className="card" aria-label={`${p.title} — ${p.summary ?? 'View project'}`}>
             <div className="card-image-wrap">
-              <div className="card-image-meta">
-                <span>{pad2(i + 1)}</span>
-                <span>/{p.slug}</span>
-              </div>
               <div
               className="card-image"
               style={p.card ? undefined : { background: p.accent }}

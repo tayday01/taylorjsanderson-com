@@ -364,7 +364,7 @@ body {
 .card-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   background: var(--bg-soft);
   overflow: hidden;
 }
@@ -379,11 +379,12 @@ body {
   transition: filter var(--t-base) var(--ease);
 }
 
-/* centered line-art icon */
+/* centered line-art icon — sized by the card's (now shorter) height */
 .card-icon {
   display: block;
-  width: 64%;
-  height: 64%;
+  height: 72%;
+  width: auto;
+  max-width: 64%;
   object-fit: contain;
   transition: transform 700ms var(--ease);
   transform-origin: center center;
@@ -397,23 +398,6 @@ body {
 .card:hover .card-icon,
 .card:focus-visible .card-icon {
   transform: scale(1.03);
-}
-
-.card-image-meta {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.875rem;
-  right: 0.875rem;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #ffffff;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  z-index: 1;
-  font-variant-numeric: tabular-nums;
 }
 
 .card-info {
@@ -432,6 +416,12 @@ body {
   display: inline-flex;
   align-items: baseline;
   gap: 0.55rem;
+  transition: color var(--t-fast) var(--ease);
+}
+
+.card:hover .card-title,
+.card:focus-visible .card-title {
+  color: var(--accent);
 }
 
 .card-title-arrow {
