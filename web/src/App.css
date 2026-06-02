@@ -775,6 +775,17 @@ body {
   color: var(--ink-soft);
 }
 
+/* placeholder project (e.g. Swamp): understated "Coming soon" in place of
+   any cover graphic. */
+.project-coming-soon {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink-muted);
+}
+
 .project-paragraph {
   margin: 0.5rem 0;
   font-size: 0.9375rem;
