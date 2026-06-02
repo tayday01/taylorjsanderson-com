@@ -357,53 +357,78 @@ body {
   outline: none;
 }
 
-.card:focus-visible .card-image {
-  box-shadow: 0 0 0 3px var(--accent);
+.card:focus-visible .card-graphic {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
 }
 
 /* transparent stage — the graphic floats here, no card background */
 .card-image-wrap {
   position: relative;
   width: 100%;
-  min-height: 260px;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* wrapper hugging the (trimmed) artwork — no background, so the graphic
-   floats on the page. Padding gives the focus ring some breathing room. */
+/* fallback accent block for any project without card art */
 .card-image {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(14px, 2vw, 22px);
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
   border-radius: 4px;
 }
 
-/* trimmed line-art graphic, scaled up ~25% from before */
-.card-icon {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 300px;
-  max-height: 210px;
-  transition: filter var(--t-base) var(--ease);
+/* graphic = two stacked alpha-mask layers (fill + line-art) in a fixed box.
+   Lifts toward the viewer on hover (slight scale + drop shadow). */
+.card-graphic {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  height: 210px;
+  transition: transform var(--t-base) var(--ease), filter var(--t-base) var(--ease);
+  transform-origin: center center;
+  will-change: transform;
 }
 
-/* hover: invert only the graphic's lines (black → white). No box; invert
-   leaves the PNG's alpha untouched, so the transparent areas stay
-   transparent — they do not fill in black. */
-.card:hover .card-icon,
-.card:focus-visible .card-icon {
-  filter: invert(1);
+.card-fill,
+.card-lines {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  transition: background-color var(--t-base) var(--ease);
+}
+
+/* at rest: fill invisible, lines ink → reads as black line-art */
+.card-fill  { background-color: transparent; }
+.card-lines { background-color: var(--ink); }
+
+/* hover/focus: fill goes black (solid silhouette), lines go orange, and the
+   whole graphic lifts toward the viewer. Transparency is never touched. */
+.card:hover .card-fill,
+.card:focus-visible .card-fill {
+  background-color: var(--ink);
+}
+.card:hover .card-lines,
+.card:focus-visible .card-lines {
+  background-color: var(--accent);
+}
+.card:hover .card-graphic,
+.card:focus-visible .card-graphic {
+  transform: scale(1.05);
+  filter: drop-shadow(0 16px 24px rgba(10, 10, 10, 0.22));
 }
 
 .card-info {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.5rem 1rem;
-  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .card-title {
@@ -474,6 +499,10 @@ body {
 
 .contact {
   padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(3rem, 6vw, 5rem);
+  /* sit in the right column (roughly under the last card); contents stay
+     left-aligned within the block. */
+  width: calc(50% - clamp(1.5rem, 3vw, 2.5rem) / 2);
+  margin-left: auto;
 }
 
 .contact-label {
@@ -1332,8 +1361,8 @@ body {
     grid-template-columns: 1fr;
   }
   .contact {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    width: auto;
+    margin-left: 0;
   }
   .topbar-label {
     /* tighten tracking so the brand label holds one line beside the

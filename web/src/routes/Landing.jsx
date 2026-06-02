@@ -8,13 +8,20 @@ export default function Landing() {
         {projects.map((p) => (
           <Link key={p.slug} to={`/${p.slug}`} className="card" aria-label={`${p.title} — ${p.summary ?? 'View project'}`}>
             <div className="card-image-wrap">
-              <div
-              className="card-image"
-              style={p.card ? undefined : { background: p.accent }}
-              aria-hidden="true"
-            >
-              {p.card && <img className="card-icon" src={p.card} alt="" />}
-            </div>
+              {p.cardLines ? (
+                <div className="card-graphic" aria-hidden="true">
+                  <span
+                    className="card-fill"
+                    style={{ WebkitMaskImage: `url(${p.cardFill})`, maskImage: `url(${p.cardFill})` }}
+                  />
+                  <span
+                    className="card-lines"
+                    style={{ WebkitMaskImage: `url(${p.cardLines})`, maskImage: `url(${p.cardLines})` }}
+                  />
+                </div>
+              ) : (
+                <div className="card-image" style={{ background: p.accent }} aria-hidden="true" />
+              )}
             </div>
             <div className="card-info">
               <h2 className="card-title">

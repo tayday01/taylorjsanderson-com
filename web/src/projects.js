@@ -10,8 +10,8 @@
 //   role    — short role descriptor, e.g. "Lead designer"
 //   tags    — array of short labels, e.g. ["Product", "SaaS"]
 //   summary — one-line description for cards + intro on the project page
-//   card    — icon src centered in the work-card image block (falls back to
-//             the accent color block when absent); inverts on hover
+//   cardFill / cardLines — paired alpha masks for the work-card graphic (fill
+//             region + line-art). Falls back to the accent block when absent.
 //   cover   — image src for the project page hero (overrides accent placeholder)
 //   body    — content blocks for the project page:
 //             { type: 'p',   text: '...' }
@@ -24,17 +24,27 @@
 // the filenames at build time — editing an icon changes its hash, which busts
 // the browser/CDN immutable cache automatically. Drop a replacement PNG in
 // src/assets/cards/ and rebuild; no cache-purge needed.
-import critCard from './assets/cards/crit.png';
-import crystalCard from './assets/cards/crystal.png';
-import rolletteCard from './assets/cards/rollette.png';
-import swampCard from './assets/cards/swamp.png';
+//
+// Each card graphic is two masked layers: `*Fill` (the solid fill region) and
+// `*Lines` (the line-art). At rest the fill is transparent and the lines are
+// ink → black line-art. On hover the fill goes black (solid silhouette) and the
+// lines go accent orange. Both are alpha masks painted via CSS background-color.
+import critFill from './assets/cards/crit-fill.png';
+import crystalFill from './assets/cards/crystal-fill.png';
+import rolletteFill from './assets/cards/rollette-fill.png';
+import swampFill from './assets/cards/swamp-fill.png';
+import critLines from './assets/cards/crit-lines.png';
+import crystalLines from './assets/cards/crystal-lines.png';
+import rolletteLines from './assets/cards/rollette-lines.png';
+import swampLines from './assets/cards/swamp-lines.png';
 
 export const projects = [
   {
     slug: 'crit',
     title: 'Crit',
     accent: '#dc2826',
-    card: critCard,
+    cardFill: critFill,
+    cardLines: critLines,
     year: '2025–2026',
     role: 'Design, prompt design, frontend',
     tags: ['Product', 'AI', 'Tooling'],
@@ -46,7 +56,8 @@ export const projects = [
     slug: 'crystal',
     title: 'Crystal',
     accent: '#2a9d8f',
-    card: crystalCard,
+    cardFill: crystalFill,
+    cardLines: crystalLines,
     year: '2014–2016',
     role: 'Designer · SD / DD / CD',
     tags: ['Architecture', 'Parametric fabrication'],
@@ -58,7 +69,8 @@ export const projects = [
     slug: 'rollette',
     title: 'Rollette',
     accent: '#e9c46a',
-    card: rolletteCard,
+    cardFill: rolletteFill,
+    cardLines: rolletteLines,
     year: '2025',
     role: 'Product designer',
     tags: ['Mobile', 'Consumer'],
@@ -70,7 +82,8 @@ export const projects = [
     slug: 'swamp',
     title: 'Swamp',
     accent: '#264653',
-    card: swampCard,
+    cardFill: swampFill,
+    cardLines: swampLines,
     year: '2025',
     role: 'Designer & developer',
     tags: ['Web', 'Experimental'],
