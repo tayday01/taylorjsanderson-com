@@ -19,7 +19,7 @@ function TopBar() {
           <p className="topbar-name">
             <Link to="/">Taylor Sanderson</Link>
           </p>
-          <span className="topbar-label">Designer · Architect · Portfolio 2026</span>
+          <span className="topbar-label">Designer · Architect · Portfolio {new Date().getFullYear()}</span>
         </div>
       </div>
     </header>
