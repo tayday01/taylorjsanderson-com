@@ -10,6 +10,8 @@
 //   role    — short role descriptor, e.g. "Lead designer"
 //   tags    — array of short labels, e.g. ["Product", "SaaS"]
 //   summary — one-line description for cards + intro on the project page
+//   card    — icon src centered in the work-card image block (falls back to
+//             the accent color block when absent); inverts on hover
 //   cover   — image src for the project page hero (overrides accent placeholder)
 //   body    — content blocks for the project page:
 //             { type: 'p',   text: '...' }
@@ -23,6 +25,7 @@ export const projects = [
     slug: 'crit',
     title: 'Crit',
     accent: '#dc2826',
+    card: '/images/cards/crit.png',
     year: '2025–2026',
     role: 'Design, prompt design, frontend',
     tags: ['Product', 'AI', 'Tooling'],
@@ -34,6 +37,7 @@ export const projects = [
     slug: 'crystal',
     title: 'Crystal',
     accent: '#2a9d8f',
+    card: '/images/cards/crystal.png',
     year: '2014–2016',
     role: 'Designer · SD / DD / CD',
     tags: ['Architecture', 'Parametric fabrication'],
@@ -45,6 +49,7 @@ export const projects = [
     slug: 'rollette',
     title: 'Rollette',
     accent: '#e9c46a',
+    card: '/images/cards/rollette.png',
     year: '2025',
     role: 'Product designer',
     tags: ['Mobile', 'Consumer'],
@@ -56,6 +61,7 @@ export const projects = [
     slug: 'swamp',
     title: 'Swamp',
     accent: '#264653',
+    card: '/images/cards/swamp.png',
     year: '2025',
     role: 'Designer & developer',
     tags: ['Web', 'Experimental'],

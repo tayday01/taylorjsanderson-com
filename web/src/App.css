@@ -372,15 +372,31 @@ body {
 .card-image {
   position: absolute;
   inset: 0;
-  filter: grayscale(1) contrast(0.95);
-  transition: filter var(--t-slow) var(--ease), transform 700ms var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-soft);
+  transition: filter var(--t-base) var(--ease);
+}
+
+/* centered line-art icon */
+.card-icon {
+  display: block;
+  width: 64%;
+  height: 64%;
+  object-fit: contain;
+  transition: transform 700ms var(--ease);
   transform-origin: center center;
 }
 
+/* invert the whole block on hover: light bg → dark, black icon → white */
 .card:hover .card-image,
 .card:focus-visible .card-image {
-  filter: grayscale(0);
-  transform: scale(1.025);
+  filter: invert(1);
+}
+.card:hover .card-icon,
+.card:focus-visible .card-icon {
+  transform: scale(1.03);
 }
 
 .card-image-meta {

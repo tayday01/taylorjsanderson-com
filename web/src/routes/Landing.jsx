@@ -14,7 +14,13 @@ export default function Landing() {
                 <span>{pad2(i + 1)}</span>
                 <span>/{p.slug}</span>
               </div>
-              <div className="card-image" style={{ background: p.accent }} aria-hidden="true" />
+              <div
+              className="card-image"
+              style={p.card ? undefined : { background: p.accent }}
+              aria-hidden="true"
+            >
+              {p.card && <img className="card-icon" src={p.card} alt="" />}
+            </div>
             </div>
             <div className="card-info">
               <h2 className="card-title">
