@@ -387,18 +387,21 @@ body {
 .card-graphic {
   position: relative;
   display: inline-flex;
+  max-width: 100%;
   transition: transform 220ms var(--ease), filter 220ms var(--ease);
   transform-origin: center center;
   will-change: transform;
 }
 
-/* the artwork: black line-art + (page-invisible) white fill on transparency */
+/* the artwork: black line-art + (page-invisible) white fill on transparency.
+   Rendered at 100% (no scaling) so stroke weights stay crisp and identical
+   across all four; only scales down if a narrow cell can't fit the natural
+   width. */
 .card-base {
   display: block;
   width: auto;
   height: auto;
-  max-width: 300px;
-  max-height: 210px;
+  max-width: 100%;
 }
 
 /* hover/focus: invert the PNG itself — white fill → black, black lines →
