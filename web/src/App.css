@@ -371,17 +371,14 @@ body {
   justify-content: center;
 }
 
-/* bounding box hugging the (trimmed) artwork. Invisible at rest so the
-   graphic floats; on hover it fills with ink — that filled box is the
-   hover indicator and the backdrop that makes the invert read. */
+/* wrapper hugging the (trimmed) artwork — no background, so the graphic
+   floats on the page. Padding gives the focus ring some breathing room. */
 .card-image {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: clamp(14px, 2vw, 22px);
   border-radius: 4px;
-  background: transparent;
-  transition: background var(--t-base) var(--ease);
 }
 
 /* trimmed line-art graphic, scaled up ~25% from before */
@@ -394,11 +391,9 @@ body {
   transition: filter var(--t-base) var(--ease);
 }
 
-/* hover: tight ink box + lines invert to white */
-.card:hover .card-image,
-.card:focus-visible .card-image {
-  background: var(--ink);
-}
+/* hover: invert only the graphic's lines (black → white). No box; invert
+   leaves the PNG's alpha untouched, so the transparent areas stay
+   transparent — they do not fill in black. */
 .card:hover .card-icon,
 .card:focus-visible .card-icon {
   filter: invert(1);
