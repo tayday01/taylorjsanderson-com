@@ -380,44 +380,30 @@ body {
   border-radius: 4px;
 }
 
-/* graphic = two stacked alpha-mask layers (fill + line-art) in a fixed box.
-   Lifts toward the viewer on hover (slight scale + drop shadow). */
+/* graphic = a single PNG floating on the page. The box is just a hover
+   target — no visible background. It lifts toward the viewer on hover. */
 .card-graphic {
   position: relative;
-  width: 300px;
-  max-width: 100%;
-  height: 210px;
+  display: inline-flex;
   transition: transform var(--t-base) var(--ease), filter var(--t-base) var(--ease);
   transform-origin: center center;
   will-change: transform;
 }
 
-.card-fill,
-.card-lines {
-  position: absolute;
-  inset: 0;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  transition: background-color var(--t-base) var(--ease);
+/* the artwork: black line-art + (page-invisible) white fill on transparency */
+.card-base {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 300px;
+  max-height: 210px;
 }
 
-/* at rest: fill invisible, lines ink → reads as black line-art */
-.card-fill  { background-color: transparent; }
-.card-lines { background-color: var(--ink); }
-
-/* hover/focus: fill goes black (solid silhouette), lines go orange, and the
-   whole graphic lifts toward the viewer. Transparency is never touched. */
-.card:hover .card-fill,
-.card:focus-visible .card-fill {
-  background-color: var(--ink);
-}
-.card:hover .card-lines,
-.card:focus-visible .card-lines {
-  background-color: var(--accent);
+/* hover/focus: invert the PNG itself — white fill → black, black lines →
+   white; transparency stays transparent. The whole graphic also lifts. */
+.card:hover .card-base,
+.card:focus-visible .card-base {
+  filter: invert(1);
 }
 .card:hover .card-graphic,
 .card:focus-visible .card-graphic {
