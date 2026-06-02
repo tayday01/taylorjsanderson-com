@@ -494,6 +494,10 @@ body {
      left-aligned within the block. Nudged further right + down. */
   width: calc(50% - clamp(1.5rem, 3vw, 2.5rem) / 2);
   margin-left: auto;
+  /* drop the whole block down (margin-top collapses here, so offset instead) */
+  position: relative;
+  top: 100px;
+  margin-bottom: 100px;
 }
 
 .contact-label {
@@ -537,10 +541,9 @@ body {
 }
 
 .contact-link {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.875rem;
   padding: 0.875rem 0;
   color: var(--ink);
   text-decoration: none;
@@ -548,24 +551,23 @@ body {
   transition: color var(--t-fast) var(--ease), padding-left var(--t-base) var(--ease);
 }
 
+/* label sits right beside its copy; the pair slides right toward the arrow
+   (up to ~150px), backing off on narrower screens. Right-aligned + min-width
+   so the labels end on a shared edge and the copy stays aligned across rows. */
 .contact-link-key {
   color: var(--ink-faint);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   min-width: 4.5rem;
-}
-
-/* slide the copy toward the right-side arrow (up to ~150px). The block and
-   arrows stay put; this backs off on narrower screens so the copy never
-   runs into the arrow. */
-.contact-link-copy {
+  text-align: right;
   margin-left: clamp(0px, calc((100vw - 760px) * 0.42), 150px);
 }
 
 .contact-link-arrow {
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
+  margin-left: auto; /* keep the arrow pinned to the right edge */
   transition: color var(--t-fast) var(--ease), transform var(--t-base) var(--ease);
 }
 
@@ -1364,6 +1366,9 @@ body {
   .contact {
     width: auto;
     margin-left: 0;
+    position: static;
+    top: auto;
+    margin-bottom: 0;
   }
   .topbar-label {
     /* tighten tracking so the brand label holds one line beside the
@@ -1378,9 +1383,6 @@ body {
   }
   .topbar-meta {
     display: none;
-  }
-  .contact-link {
-    grid-template-columns: auto 1fr auto;
   }
   .contact-link-key {
     min-width: 3.5rem;
