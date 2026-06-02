@@ -78,7 +78,7 @@ export const projects = [
     year: '2025',
     role: 'Designer & developer',
     tags: ['Web', 'Experimental'],
-    summary: 'An ambient web experience built from field recordings and slow type.',
+    summary: 'A deployable architecture, a speculative comic, a working kinetic prototype. a narrative journey through Florida\'s Fakahatchee Strand. The architecture is merely a waypoint.',
     body: [],
   },
 ];

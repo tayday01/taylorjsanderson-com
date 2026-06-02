@@ -8,6 +8,7 @@ export default function Swamp() {
     <article className="project">
       <h1 className="project-title">{project.title}</h1>
       <p className="project-coming-soon">Coming soon</p>
+      <p className="project-coming-tag">{project.summary}</p>
     </article>
   );
 }
