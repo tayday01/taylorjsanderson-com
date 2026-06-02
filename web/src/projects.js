@@ -20,12 +20,21 @@
 //
 // Add a project: append a record below. The slug becomes the URL.
 
+// Card icons are imported (not referenced from /public) so Vite content-hashes
+// the filenames at build time — editing an icon changes its hash, which busts
+// the browser/CDN immutable cache automatically. Drop a replacement PNG in
+// src/assets/cards/ and rebuild; no cache-purge needed.
+import critCard from './assets/cards/crit.png';
+import crystalCard from './assets/cards/crystal.png';
+import rolletteCard from './assets/cards/rollette.png';
+import swampCard from './assets/cards/swamp.png';
+
 export const projects = [
   {
     slug: 'crit',
     title: 'Crit',
     accent: '#dc2826',
-    card: '/images/cards/crit.png',
+    card: critCard,
     year: '2025–2026',
     role: 'Design, prompt design, frontend',
     tags: ['Product', 'AI', 'Tooling'],
@@ -37,7 +46,7 @@ export const projects = [
     slug: 'crystal',
     title: 'Crystal',
     accent: '#2a9d8f',
-    card: '/images/cards/crystal.png',
+    card: crystalCard,
     year: '2014–2016',
     role: 'Designer · SD / DD / CD',
     tags: ['Architecture', 'Parametric fabrication'],
@@ -49,7 +58,7 @@ export const projects = [
     slug: 'rollette',
     title: 'Rollette',
     accent: '#e9c46a',
-    card: '/images/cards/rollette.png',
+    card: rolletteCard,
     year: '2025',
     role: 'Product designer',
     tags: ['Mobile', 'Consumer'],
@@ -61,7 +70,7 @@ export const projects = [
     slug: 'swamp',
     title: 'Swamp',
     accent: '#264653',
-    card: '/images/cards/swamp.png',
+    card: swampCard,
     year: '2025',
     role: 'Designer & developer',
     tags: ['Web', 'Experimental'],
