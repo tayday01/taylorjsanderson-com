@@ -339,7 +339,9 @@ body {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.5rem, 3vw, 2.5rem);
+  /* +50px row-gap drops the 2nd row (rollette/swamp) and, since the grid
+     grows, the contact block below it cascades down 50px too. */
+  gap: calc(clamp(1.75rem, 3.5vw, 2.75rem) + 50px) clamp(1.5rem, 3vw, 2.5rem);
   padding: 1.5rem 0 clamp(1rem, 2vw, 1.5rem);
   /* nudge the whole work grid (cards + titles) down; header is unaffected */
   transform: translateY(40px);
@@ -364,11 +366,13 @@ body {
   outline-offset: 6px;
 }
 
-/* transparent stage — the graphic floats here, no card background */
+/* transparent stage — the graphic floats here, no card background. Fixed
+   height ≥ the tallest graphic so every graphic centers in an equal area
+   and the titles below all line up (e.g. Crit aligns with Crystal). */
 .card-image-wrap {
   position: relative;
   width: 100%;
-  min-height: 240px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1359,9 +1363,9 @@ body {
   }
   .card-grid {
     grid-template-columns: 1fr;
-  }
-  .card-grid {
     transform: none;
+    /* single column on mobile — drop the +50 desktop row spacing */
+    gap: clamp(1.75rem, 3.5vw, 2.75rem);
   }
   .contact {
     width: auto;
