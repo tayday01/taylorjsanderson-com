@@ -385,7 +385,7 @@ body {
 .card-graphic {
   position: relative;
   display: inline-flex;
-  transition: transform var(--t-base) var(--ease), filter var(--t-base) var(--ease);
+  transition: transform 220ms var(--ease), filter 220ms var(--ease);
   transform-origin: center center;
   will-change: transform;
 }
@@ -407,8 +407,8 @@ body {
 }
 .card:hover .card-graphic,
 .card:focus-visible .card-graphic {
-  transform: scale(1.05);
-  filter: drop-shadow(0 16px 24px rgba(10, 10, 10, 0.22));
+  transform: translateY(-8px) scale(1.04);
+  filter: drop-shadow(0 14px 22px rgba(10, 10, 10, 0.18));
 }
 
 .card-info {
